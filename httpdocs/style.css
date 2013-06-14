@@ -1,0 +1,76 @@
+@-webkit-keyframes pulse {
+	from {
+		opacity: 1;
+	}
+	to {
+		opacity: 0.3;
+	}
+}
+@keyframes pulse {
+	from {
+		opacity: 1;
+	}
+	to {
+		opacity: 0.3;
+	}
+}
+
+
+* {
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+}
+html, body {
+	margin: 0;
+	font-size: 100%;
+	height: 100%;
+}
+body {
+	height: 100%;
+	background: black;
+	overflow: hidden;
+	padding-top: 1em;
+}
+.content {
+	width: 320px;
+	height: 100%;
+	margin: 0 auto;
+
+	position: relative;
+	overflow: hidden;
+}
+.canvas {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	height: 320px;
+}
+.value {
+	margin: 0;
+	padding-top: 1.6em;
+
+	color: white;
+	font-family: 'RalewayExtraLight', sans-serif;
+	font-weight: normal;
+	font-size: 4.5em; /* 72/16em */
+	text-align: center;
+}
+.location {
+	margin: 0;
+
+	color: #aaa;
+	font-family: 'RalewaySemiBold', sans-serif;
+	font-weight: normal;
+	font-size: 0.75em; /* 12/16em; */
+	text-align: center;
+	text-transform: uppercase;
+}
+
+.value.loading {
+	-webkit-animation: pulse 1s ease-in-out 0s infinite alternate;
+	animation: pulse 1s ease-in-out 0s infinite alternate;
+}
+.value.loading span {
+	font-size: 0.75em;
+}

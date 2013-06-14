@@ -1,0 +1,27 @@
+<!doctype html>
+<html manifest="app.appcache">
+<head>
+	<title>Rain Gauge</title>
+	<meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<link rel="apple-touch-icon" sizes="114x114" href="apple-touch-icon.png" />
+	<link rel="apple-touch-startup-image" sizes="320x460" href="apple-touch-startup-image.png" media="(device-width: 320px)" />
+	<link rel="apple-touch-startup-image" sizes="640x920" href="apple-touch-startup-image@2x.png" media="(device-width: 320px) and (-webkit-device-pixel-ratio: 2)" />
+	<link rel="apple-touch-startup-image" sizes="640x1096" href="apple-touch-startup-image-568h@2x.png" media="(device-width: 320px) and (-webkit-device-pixel-ratio: 2)" />
+
+
+	<link rel="stylesheet" href="raleway/stylesheet.css">
+	<link rel="stylesheet" href="style.css">
+	<script src="arc.js"></script>
+</head>
+<body>
+	<div class="content">
+		<canvas id="canvas" class="canvas" width="320" height="320"></canvas>
+		<h1 id="value" class="value loading"><span>Loading</span></h1>
+		<h2 class="location" id="location">Sioux Falls</h2>
+	</div>
+
+	<script src="script.js"></script>
+</body>
+</html>
