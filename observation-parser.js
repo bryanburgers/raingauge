@@ -41,8 +41,8 @@ function getValue(value) {
 	return v;
 }
 
-function ObservationParserStream() {
-	stream.Duplex.call(this, { objectMode: true });
+function ObservationParser() {
+	stream.Writable.call(this, { objectMode: true });
 
 	this._state = START;
 	this._currentcol = -1;
@@ -54,14 +54,14 @@ function ObservationParserStream() {
 	});
 
 	var self = this;
-	//this.on('finish', function() {
-		//self._parser.end();
-	//});
+	this.on('finish', function() {
+		self._parser.end();
+	});
 }
 
-util.inherits(ObservationParserStream, stream.Duplex);
+util.inherits(ObservationParser, stream.Writable);
 
-ObservationParserStream.prototype._onopentag = function(tagname, attribs) {
+ObservationParser.prototype._onopentag = function(tagname, attribs) {
 	switch (this._state) {
 		case START:
 			if (tagname == "table" && attribs.cellspacing == '3' && attribs.cellpadding == '2' && attribs.width == '670') {
@@ -87,7 +87,7 @@ ObservationParserStream.prototype._onopentag = function(tagname, attribs) {
 	}
 };
 
-ObservationParserStream.prototype._ontext = function(text) {
+ObservationParser.prototype._ontext = function(text) {
 	switch (this._state) {
 		case START:
 			break;
@@ -111,7 +111,7 @@ ObservationParserStream.prototype._ontext = function(text) {
 	}
 };
 
-ObservationParserStream.prototype._onclosetag = function(tagname) {
+ObservationParser.prototype._onclosetag = function(tagname) {
 	switch (this._state) {
 		case START:
 			break;
@@ -126,31 +126,25 @@ ObservationParserStream.prototype._onclosetag = function(tagname) {
 				if (this._currentcol > -1) {
 					var date = getDate(this._currentitem.date, this._currentitem.time);
 					var value = getValue(this._currentitem.value);
-					var result = this.push({ date: date, value: value });
-					if (!result) {
-						console.log("UH OH!");
-					}
+					this.emit('value', { date: date, value: value });
 				}
 			}
 			break;
 		case DONE:
-			this.push(null);
+			this.emit('end');
 			break;
 		default:
 			break;
 	}
 };
 
-ObservationParserStream.prototype._write = function(chunk, encoding, callback) {
+ObservationParser.prototype._write = function(chunk, encoding, callback) {
 	this._parser.write(chunk);
 	callback();
 };
-ObservationParserStream.prototype._read = function(n) {
-	return null;
-};
 
 module.exports = function() {
-	return new ObservationParserStream();
+	return new ObservationParser();
 };
 
-module.exports.ObservationParserStream = ObservationParserStream;
+module.exports.ObservationParser = ObservationParser;

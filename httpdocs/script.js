@@ -24,10 +24,8 @@ var lastUpdate = 0;
 function requestData() {
 	lastUpdate = new Date().valueOf();
 	var xhr = new XMLHttpRequest();
-	console.log(xhr);
 	xhr.onreadystatechange = function() {
 		if (xhr.readyState === 4) {
-			console.log(xhr.responseText);
 			var response = JSON.parse(xhr.responseText);
 			setValue(response.value);
 		}
